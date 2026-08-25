@@ -1,8 +1,12 @@
 <script lang="ts">
-    import { Link } from '@inertiajs/svelte';
+    import { Link, page } from '@inertiajs/svelte';
     import BookOpen from 'lucide-svelte/icons/book-open';
+    import FileText from 'lucide-svelte/icons/file-text';
+    import Folder from 'lucide-svelte/icons/folder';
     import FolderGit2 from 'lucide-svelte/icons/folder-git-2';
+    import Image from 'lucide-svelte/icons/image';
     import LayoutGrid from 'lucide-svelte/icons/layout-grid';
+    import Tags from 'lucide-svelte/icons/tags';
     import type { Snippet } from 'svelte';
     import AppLogo from '@/components/AppLogo.svelte';
     import NavFooter from '@/components/NavFooter.svelte';
@@ -27,13 +31,48 @@
         children?: Snippet;
     } = $props();
 
-    const mainNavItems: NavItem[] = [
-        {
-            title: 'Dashboard',
-            href: dashboard(),
-            icon: LayoutGrid,
-        },
-    ];
+    const user = $derived(page.props.auth?.user);
+    const permissions = $derived(user?.permissions ?? []);
+
+    function hasPermission(permission: string): boolean {
+        if (user?.roles?.includes('admin')) {
+return true;
+}
+
+        return permissions.includes(permission);
+    }
+
+    const mainNavItems = $derived.by(() => {
+        const items: NavItem[] = [];
+
+        if (hasPermission('view dashboard')) {
+            items.push({ title: 'Dashboard', href: dashboard(), icon: LayoutGrid });
+        }
+
+        return items;
+    });
+
+    const cmsNavItems = $derived.by(() => {
+        const items: NavItem[] = [];
+
+        if (hasPermission('manage posts')) {
+            items.push({ title: 'Artikel', href: '/admin/posts', icon: FileText });
+        }
+
+        if (hasPermission('manage categories')) {
+            items.push({ title: 'Kategori', href: '/admin/categories', icon: Folder });
+        }
+
+        if (hasPermission('manage tags')) {
+            items.push({ title: 'Tag', href: '/admin/tags', icon: Tags });
+        }
+
+        if (hasPermission('manage media')) {
+            items.push({ title: 'Media', href: '/admin/media', icon: Image });
+        }
+
+        return items;
+    });
 
     const footerNavItems: NavItem[] = [
         {
@@ -69,7 +108,12 @@
     </SidebarHeader>
 
     <SidebarContent>
-        <NavMain items={mainNavItems} />
+        {#if mainNavItems.length > 0}
+            <NavMain items={mainNavItems} label="Menu" />
+        {/if}
+        {#if cmsNavItems.length > 0}
+            <NavMain items={cmsNavItems} label="CMS" />
+        {/if}
     </SidebarContent>
 
     <SidebarFooter>
