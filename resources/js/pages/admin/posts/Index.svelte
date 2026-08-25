@@ -117,7 +117,7 @@ return 'archived';
                             </tr>
                         </thead>
                         <tbody>
-                            {#each posts.data as post}
+                            {#each posts.data as post (post.id)}
                                 <tr class="border-b">
                                     <td class="py-3">
                                         <p class="font-medium">{post.title}</p>
@@ -154,7 +154,7 @@ return 'archived';
 
                 {#if posts.last_page > 1}
                     <div class="mt-4 flex justify-center gap-2">
-                        {#each Array.from({ length: posts.last_page }, (_, i) => i + 1) as page}
+                        {#each Array.from({ length: posts.last_page }, (_, i) => i + 1) as page (page)}
                             <Button
                                 variant={page === posts.current_page ? 'default' : 'outline'}
                                 size="sm"

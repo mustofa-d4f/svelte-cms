@@ -28,7 +28,7 @@
 
     function submit(e: Event) {
         e.preventDefault();
-        $form.post(store.url());
+        form.post(store.url());
     }
 </script>
 
@@ -48,34 +48,34 @@
             <form onsubmit={submit} class="space-y-4">
                 <div class="space-y-2">
                     <Label for="name">Nama</Label>
-                    <Input id="name" bind:value={$form.name} placeholder="Nama kategori" />
-                    {#if $form.errors.name}
-                        <p class="text-sm text-destructive">{$form.errors.name}</p>
+                    <Input id="name" bind:value={form.name} placeholder="Nama kategori" />
+                    {#if form.errors.name}
+                        <p class="text-sm text-destructive">{form.errors.name}</p>
                     {/if}
                 </div>
                 <div class="space-y-2">
                     <Label for="slug">Slug</Label>
-                    <Input id="slug" bind:value={$form.slug} placeholder="otomatis dari nama" />
+                    <Input id="slug" bind:value={form.slug} placeholder="otomatis dari nama" />
                 </div>
                 <div class="space-y-2">
                     <Label for="description">Deskripsi</Label>
-                    <Input id="description" bind:value={$form.description} placeholder="Deskripsi kategori" />
+                    <Input id="description" bind:value={form.description} placeholder="Deskripsi kategori" />
                 </div>
                 <div class="space-y-2">
                     <Label for="parent_id">Kategori Induk</Label>
                     <select
                         id="parent_id"
-                        bind:value={$form.parent_id}
+                        bind:value={form.parent_id}
                         class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                     >
                         <option value="">Tidak ada (Root)</option>
-                        {#each parentCategories as cat}
+                        {#each parentCategories as cat (cat.id)}
                             <option value={cat.id}>{cat.name}</option>
                         {/each}
                     </select>
                 </div>
-                <Button type="submit" disabled={$form.processing}>
-                    {$form.processing ? 'Menyimpan...' : 'Simpan Kategori'}
+                <Button type="submit" disabled={form.processing}>
+                    {form.processing ? 'Menyimpan...' : 'Simpan Kategori'}
                 </Button>
             </form>
         </CardContent>

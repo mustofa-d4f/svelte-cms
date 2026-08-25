@@ -2,10 +2,8 @@
     import { Editor } from '@tiptap/core';
     import Highlight from '@tiptap/extension-highlight';
     import Image from '@tiptap/extension-image';
-    import Link from '@tiptap/extension-link';
     import Placeholder from '@tiptap/extension-placeholder';
     import TextAlign from '@tiptap/extension-text-align';
-    import Underline from '@tiptap/extension-underline';
     import StarterKit from '@tiptap/starter-kit';
     import {
         Bold, Italic, Underline as UnderlineIcon, Strikethrough,
@@ -67,12 +65,12 @@ return;
             extensions: [
                 StarterKit.configure({
                     heading: { levels: [1, 2, 3] },
+                    link: { openOnClick: false, HTMLAttributes: { class: 'text-primary underline' } },
+                    underline: {},
                 }),
                 Image.configure({ inline: false, allowBase64: true }),
-                Link.configure({ openOnClick: false, HTMLAttributes: { class: 'text-primary underline' } }),
                 Placeholder.configure({ placeholder }),
                 TextAlign.configure({ types: ['heading', 'paragraph'] }),
-                Underline,
                 Highlight.configure({ multicolor: false }),
             ],
             content,

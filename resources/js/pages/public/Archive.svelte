@@ -68,7 +68,7 @@ params.tag = selectedTag;
                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
             >
                 <option value="">Semua Kategori</option>
-                {#each categories as cat}
+                {#each categories as cat (cat.id)}
                     <option value={cat.id}>{cat.name}</option>
                 {/each}
             </select>
@@ -80,7 +80,7 @@ params.tag = selectedTag;
                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
             >
                 <option value="">Semua Tag</option>
-                {#each tags as tag}
+                {#each tags as tag (tag.id)}
                     <option value={tag.id}>{tag.name}</option>
                 {/each}
             </select>
@@ -96,7 +96,7 @@ params.tag = selectedTag;
         </Card>
     {:else}
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {#each posts.data as post}
+            {#each posts.data as post (post.id)}
                 <Link href={show.url(post.slug)} class="group">
                     <Card class="h-full transition-shadow hover:shadow-md">
                         {#if post.featured_image}
@@ -140,7 +140,7 @@ params.tag = selectedTag;
 
         {#if posts.last_page > 1}
             <div class="mt-8 flex justify-center gap-2">
-                {#each Array.from({ length: posts.last_page }, (_, i) => i + 1) as page}
+                {#each Array.from({ length: posts.last_page }, (_, i) => i + 1) as page (page)}
                     <Button
                         variant={page === posts.current_page ? 'default' : 'outline'}
                         size="sm"

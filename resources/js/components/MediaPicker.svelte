@@ -18,7 +18,7 @@
     let search = $state('');
     let uploading = $state(false);
     let dragOver = $state(false);
-    let fileInput: HTMLInputElement;
+    let fileInput = $state<HTMLInputElement>();
 
     async function loadMedia() {
         try {
@@ -141,7 +141,7 @@ loadMedia();
 
 {#if open}
     <div class="fixed inset-0 z-50 flex items-center justify-center">
-        <button type="button" class="fixed inset-0 bg-black/50" onclick={() => open = false}></button>
+        <button type="button" class="fixed inset-0 bg-black/50" aria-label="Tutup" onclick={() => open = false}></button>
         <div class="relative z-10 flex h-[80vh] w-full max-w-4xl flex-col rounded-lg border bg-background shadow-lg">
             <!-- Header -->
             <div class="flex items-center justify-between border-b px-6 py-4">
@@ -179,6 +179,8 @@ loadMedia();
             <!-- Drop Zone / Content -->
             <div
                 class="flex-1 overflow-y-auto p-6"
+                role="region"
+                aria-label="Area upload"
                 ondragover={(e) => {
  e.preventDefault(); dragOver = true; 
 }}

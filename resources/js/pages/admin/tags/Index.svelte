@@ -67,7 +67,7 @@
                 <p class="text-sm text-muted-foreground text-center py-8">Belum ada tag.</p>
             {:else}
                 <div class="flex flex-wrap gap-2">
-                    {#each tags.data as tag}
+                    {#each tags.data as tag (tag.id)}
                         <div class="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm">
                             <span>{tag.name}</span>
                             <span class="text-xs text-muted-foreground">({tag.posts_count ?? 0})</span>

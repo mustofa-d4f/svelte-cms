@@ -106,7 +106,7 @@
                             class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                         >
                             <option value={null}>Tidak ada (Root)</option>
-                            {#each categories.data.filter((c: any) => !c.parent_id) as cat}
+                            {#each categories.data.filter((c: any) => !c.parent_id) as cat (cat.id)}
                                 <option value={cat.id}>{cat.name}</option>
                             {/each}
                         </select>
@@ -136,7 +136,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {#each categories.data as cat}
+                            {#each categories.data as cat (cat.id)}
                                 <tr class="border-b">
                                     <td class="py-3">
                                         <p class="font-medium">{cat.name}</p>
